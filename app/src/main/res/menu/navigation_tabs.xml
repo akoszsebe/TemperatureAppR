@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_inside"
+        android:icon="@drawable/inside"
+        android:title="@string/inside" />
+
+    <item
+        android:id="@+id/navigation_outside"
+        android:icon="@drawable/outside"
+        android:title="@string/outside" />
+</menu>

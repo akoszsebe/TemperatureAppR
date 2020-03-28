@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <color name="colorPrimary">#03DAC6</color>
+    <color name="colorPrimaryDark">#018786</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryText">#FFFFF0</color>
+    <color name="windowBackground">#3c3c3c</color>
+    <color name="chartfillstartColor">#00000000</color>
+    <color name="chartfillendColor">#66fff9</color>
+    <color name="colorGray">#bdbdbd</color>
+    <color name="colorWhite">#FFFFFF</color>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Home Temperature</string>
+    <string name="inside">In</string>
+    <string name="outside">Out</string>
+</resources>
