@@ -2,4 +2,9 @@
     <string name="app_name">Home Temperature</string>
     <string name="inside">In</string>
     <string name="outside">Out</string>
+    <string name="inside_temp">Temperature in house</string>
+    <string name="outside_temp">Temperature outside</string>
+    <string name="_60">60</string>
+    <string name="_0">0</string>
+    <string name="celsius">CELSIUS</string>
 </resources>

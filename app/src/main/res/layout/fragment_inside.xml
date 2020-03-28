@@ -1,21 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/empty_garden"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="inside"
-            android:textAppearance="?attr/textAppearanceHeadline1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            android:text="@string/inside_temp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FFFFF0" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:baselineAligned="false">
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:layout_weight="1"
+                tools:ignore="UselessParent">
+
+                <com.jackandphantom.circularprogressbar.CircleProgressbar
+                    android:id="@+id/circleProgressbar"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:gravity="center"
+                    android:rotation="180"
+                    app:cpb_clockwise="false"
+                    app:cpb_foregroundProgressColor="@color/colorPrimary"
+                    app:cpb_foregroundProgressWidth="15"
+                    app:cpb_progress="0"
+                    app:cpb_roundedCorner="true"
+                    app:cpb_touchEnabled="false" />
+
+                <TextView
+                    android:id="@+id/temperature"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:maxLength="6"
+                    android:maxLines="1"
+                    android:text="@string/_60"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/colorPrimaryText" />
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:gravity="center"
+                    android:maxLength="7"
+                    android:maxLines="1"
+                    android:text="@string/celsius"
+                    android:textColor="@color/colorPrimaryText" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@color/windowBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:maxLength="4"
+                        android:maxLines="1"
+                        android:text="@string/_0"
+                        android:textColor="@color/colorPrimaryText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:gravity="center"
+                        android:maxLength="4"
+                        android:maxLines="1"
+                        android:text="@string/_60"
+                        android:textColor="@color/colorPrimaryText" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/myChart"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+    </LinearLayout>
 </layout>
