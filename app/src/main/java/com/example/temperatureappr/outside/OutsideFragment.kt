@@ -20,7 +20,7 @@ class OutsideFragment :
         myChart = MyChart(
             binding.myChart,
             requireContext().resources.getColor(R.color.windowBackground),
-            requireContext().resources.getColor(R.color.colorAccent),
+            requireContext().resources.getColor(R.color.colorPink),
             requireContext().getDrawable(R.drawable.fade_pink)
         )
         subscribeUi()
@@ -49,7 +49,7 @@ class OutsideFragment :
         binding.temperature.text = String.format("%s", temperature)
     }
 
-    fun displayChartChange(temperature: Float) {
+    private fun displayChartChange(temperature: Float) {
         myChart.addData(temperature)
     }
 }

@@ -29,12 +29,12 @@ class HomeViewPagerFragment :
             when (it.itemId) {
                 R.id.navigation_outside -> {
                     viewPager.currentItem = 1
-                    setStatusBarColor(R.color.colorAccent)
+                    setStatusBarColor(R.color.colorPinkDark)
                     true
                 }
                 else -> {
                     viewPager.currentItem = 0
-                    setStatusBarColor(R.color.colorPrimaryDark)
+                    setStatusBarColor(R.color.colorGreenDark)
                     true
                 }
             }
@@ -43,8 +43,8 @@ class HomeViewPagerFragment :
             viewPager.setCurrentItem(it, false)
             binding.navigation.menu[it].isChecked = true
             when (it) {
-                1 ->  setStatusBarColor(R.color.colorAccent)
-                else ->  setStatusBarColor(R.color.colorPrimaryDark)
+                1 ->  setStatusBarColor(R.color.colorPinkDark)
+                else ->  setStatusBarColor(R.color.colorGreenDark)
             }
         }
         viewPager.registerOnPageChangeCallback(viewPagerPageChangeCallback)

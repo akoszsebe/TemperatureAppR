@@ -20,7 +20,7 @@ class InsideFragment :
         myChart = MyChart(
             binding.myChart,
             requireContext().resources.getColor(R.color.windowBackground),
-            requireContext().resources.getColor(R.color.colorPrimary),
+            requireContext().resources.getColor(R.color.colorGreen),
             requireContext().getDrawable(R.drawable.fade_green)
         )
         subscribeUi()
@@ -31,11 +31,11 @@ class InsideFragment :
         displayTemperatureTextChange(0f)
 
         // todo request in view model
-        val _temperature = 23f
-        displayCircularProgressBarChange(_temperature)
-        displayTemperatureTextChange(_temperature)
-        displayChartChange(_temperature)
-        displayChartChange(_temperature)
+        val temperature = 23f
+        displayCircularProgressBarChange(temperature)
+        displayTemperatureTextChange(temperature)
+        displayChartChange(temperature)
+        displayChartChange(temperature)
     }
 
     private fun displayCircularProgressBarChange(temperature: Float) {
@@ -49,7 +49,7 @@ class InsideFragment :
         binding.temperature.text = String.format("%s", temperature)
     }
 
-    fun displayChartChange(temperature: Float) {
+    private fun displayChartChange(temperature: Float) {
         myChart.addData(temperature)
     }
 }

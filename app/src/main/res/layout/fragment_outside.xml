@@ -36,7 +36,7 @@
                     android:gravity="center"
                     android:rotation="180"
                     app:cpb_clockwise="false"
-                    app:cpb_foregroundProgressColor="@color/colorAccent"
+                    app:cpb_foregroundProgressColor="@color/colorPink"
                     app:cpb_foregroundProgressWidth="15"
                     app:cpb_progress="0"
                     app:cpb_roundedCorner="true"
