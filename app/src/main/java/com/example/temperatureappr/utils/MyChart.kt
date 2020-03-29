@@ -16,7 +16,6 @@ class MyChart constructor(
     private var colorPrimary: Int,
     private var fadeGreen: Drawable?
 ) {
-
     private var yVals: MutableList<Entry> = ArrayList()
     private var set1: LineDataSet? = null
     private var index = 0f
@@ -26,43 +25,48 @@ class MyChart constructor(
     }
 
     private fun setUpDataSetInfo() {
-        mChart.setViewPortOffsets(0f, 0f, 0f, 0f)
-        mChart.setBackgroundColor(windowBackground)
-        mChart.setDrawGridBackground(false)
-        mChart.axisRight.isEnabled = true
-        mChart.legend.isEnabled = false
-        mChart.setPinchZoom(false)
-        mChart.isDoubleTapToZoomEnabled = false
-        mChart.description.isEnabled = false
-        val x = mChart.xAxis
-        x.isEnabled = false
-        val y = mChart.axisLeft
-        y.setLabelCount(7, true)
-        y.textColor = Color.rgb(255, 255, 240)
-        y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
-        y.setDrawGridLines(false)
-        y.axisLineColor = Color.WHITE
-        y.setDrawAxisLine(false)
-        y.yOffset = 5f
-        y.xOffset = 10f
-        y.axisMaximum = 60f
-        y.axisMinimum = 0f
+        mChart.apply {
+            setViewPortOffsets(0f, 0f, 0f, 0f)
+            setBackgroundColor(windowBackground)
+            setDrawGridBackground(false)
+            axisRight.isEnabled = true
+            legend.isEnabled = false
+            setPinchZoom(false)
+            isDoubleTapToZoomEnabled = false
+            description.isEnabled = false
+        }
+        mChart.xAxis.apply {
+            isEnabled = false
+        }
+        mChart.axisLeft.apply {
+            setLabelCount(7, true)
+            textColor = Color.rgb(255, 255, 240)
+            setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
+            setDrawGridLines(false)
+            axisLineColor = Color.WHITE
+            setDrawAxisLine(false)
+            yOffset = 5f
+            xOffset = 10f
+            axisMaximum = 60f
+            axisMinimum = 0f
+        }
         yVals.add(Entry(1f, 0f))
-        set1 = LineDataSet(yVals, "DataSet 1")
-        set1!!.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
-        set1!!.cubicIntensity = 0.1f
-        set1!!.setDrawCircles(false)
-        set1!!.lineWidth = 2f
-        set1!!.circleRadius = 4f
-        set1!!.color = colorPrimary
-        set1!!.isHighlightEnabled = false
-        set1!!.fillAlpha = 65
-        set1!!.setDrawFilled(true)
+        set1 = LineDataSet(yVals, "DataSet 1").apply {
+            mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+            cubicIntensity = 0.1f
+            setDrawCircles(false)
+            lineWidth = 2f
+            circleRadius = 4f
+            color = colorPrimary
+            isHighlightEnabled = false
+            fillAlpha = 65
+            setDrawFilled(true)
+        }
         if (Utils.getSDKInt() >= 18) {
             val drawable: Drawable? = fadeGreen
-            set1!!.fillDrawable = drawable
+            set1?.apply { fillDrawable = drawable }
         } else {
-            set1!!.fillColor = colorPrimary
+            set1?.apply { fillColor = colorPrimary }
         }
         val data = LineData(set1)
         data.setDrawValues(false)
@@ -81,7 +85,11 @@ class MyChart constructor(
                 value
             )
         )
-        set1!!.values = yVals
+        set1.let {
+            if (it != null) {
+                it.values = yVals
+            }
+        }
         mChart.data.notifyDataChanged()
         mChart.notifyDataSetChanged()
         mChart.animateX(0)
