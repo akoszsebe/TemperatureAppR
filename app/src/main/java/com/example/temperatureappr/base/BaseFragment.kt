@@ -15,11 +15,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.example.temperatureappr.utils.LoaderDialog
 import com.example.temperatureappr.utils.SharedPrefs
+import org.koin.core.qualifier.TypeQualifier
+import kotlin.reflect.KClass
+import com.example.temperatureappr.di.module.util.viewModel
 
-abstract class BaseFragment<B : ViewDataBinding, VM : ViewModel>(private var layoutResId: Int) : Fragment() {
+
+abstract class BaseFragment<B : ViewDataBinding,out VM : ViewModel>(private var layoutResId: Int,vmClass: KClass<VM>) : Fragment() {
     lateinit var sharedPrefs: SharedPrefs
     protected lateinit var binding: B
-    protected lateinit var viewModel: VM
+    protected val viewModel : VM by viewModel(vmClass, qualifier = TypeQualifier(vmClass))
     private lateinit var progressBar : Dialog
 
     override fun onCreateView(

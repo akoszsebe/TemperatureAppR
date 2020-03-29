@@ -2,6 +2,7 @@ package com.example.temperatureappr.outside
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.example.temperatureappr.R
 import com.example.temperatureappr.base.BaseFragment
 import com.example.temperatureappr.databinding.FragmentOutsideBinding
@@ -11,31 +12,33 @@ private const val ANIMATION_DURATION = 2500
 private const val PROGRESS_SHIFT = 1.66f
 
 class OutsideFragment :
-    BaseFragment<FragmentOutsideBinding, OutsideViewModel>(R.layout.fragment_outside) {
+    BaseFragment<FragmentOutsideBinding, OutsideViewModel>(
+        R.layout.fragment_outside,
+        OutsideViewModel::class
+    ) {
     private lateinit var myChart: MyChart
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = OutsideViewModel()
         myChart = MyChart(
             binding.myChart,
             requireContext().resources.getColor(R.color.windowBackground),
             requireContext().resources.getColor(R.color.colorPink),
             requireContext().getDrawable(R.drawable.fade_pink)
         )
-        subscribeUi()
+        initViewModel()
     }
 
-    private fun subscribeUi() {
+    private fun initViewModel() {
         displayCircularProgressBarChange(0f)
         displayTemperatureTextChange(0f)
+        viewModel.temperature.observe(viewLifecycleOwner, Observer { newTemperature ->
+            displayCircularProgressBarChange(newTemperature)
+            displayTemperatureTextChange(newTemperature)
+            displayChartChange(newTemperature)
+        })
 
-        // todo request in view model
-        val temperature = 14f
-        displayCircularProgressBarChange(temperature)
-        displayTemperatureTextChange(temperature)
-        displayChartChange(temperature)
-        displayChartChange(temperature)
+        viewModel.loadTemperature()
     }
 
     private fun displayCircularProgressBarChange(temperature: Float) {

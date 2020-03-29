@@ -11,18 +11,16 @@ import com.example.temperatureappr.databinding.FragmentViewPagerBinding
 import com.example.temperatureappr.homeviewpager.adapter.HomeViewPagerAdapter
 
 class HomeViewPagerFragment :
-    BaseFragment<FragmentViewPagerBinding, HomeViewPagerViewModel>(R.layout.fragment_view_pager) {
+    BaseFragment<FragmentViewPagerBinding, HomeViewPagerViewModel>(
+        R.layout.fragment_view_pager,
+        HomeViewPagerViewModel::class
+    ) {
 
     private lateinit var viewPagerPageChangeCallback: ViewPager2PageChangeCallback
     private lateinit var viewPager: ViewPager2
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = HomeViewPagerViewModel()
-//        =
-//            InjectorUtils.provideHomeViewPagerViewModelFactory().create(
-//            HomeViewPagerViewModel::class.java
-//        )
         viewPager = binding.viewPager
         viewPager.adapter = HomeViewPagerAdapter(this)
         binding.navigation.setOnNavigationItemSelectedListener {
@@ -43,8 +41,8 @@ class HomeViewPagerFragment :
             viewPager.setCurrentItem(it, false)
             binding.navigation.menu[it].isChecked = true
             when (it) {
-                1 ->  setStatusBarColor(R.color.colorPinkDark)
-                else ->  setStatusBarColor(R.color.colorGreenDark)
+                1 -> setStatusBarColor(R.color.colorPinkDark)
+                else -> setStatusBarColor(R.color.colorGreenDark)
             }
         }
         viewPager.registerOnPageChangeCallback(viewPagerPageChangeCallback)
