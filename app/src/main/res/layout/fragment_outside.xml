@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
@@ -16,12 +16,42 @@
             android:gravity="center"
             android:text="@string/outside_temp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FFFFF0" />
+            android:textColor="#FFFFF0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/button_gps"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/windowBackground"
+            android:scaleType="fitCenter"
+            android:src="@drawable/location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="250dp"
             android:layout_height="300dp"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            app:layout_constraintBottom_toTopOf="@+id/myChart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -93,17 +123,11 @@
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/myChart"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
-    </LinearLayout>
+            android:layout_height="250dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

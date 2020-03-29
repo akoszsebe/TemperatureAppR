@@ -8,6 +8,18 @@
         android:id="@+id/view_pager_fragment"
         android:name="com.example.temperatureappr.homeviewpager.HomeViewPagerFragment"
         tools:layout="@layout/fragment_view_pager">
-
+        <action
+            android:id="@+id/action_outside_fragment_to_location_setup_fragment"
+            app:destination="@id/location_setup_fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+    <fragment
+        android:id="@+id/location_setup_fragment"
+        android:name="com.example.temperatureappr.locationsetup.LocationSetupFragment"
+        android:label="@string/locationSetup"
+        tools:layout="@layout/fragment_location_setup" />
 </navigation>

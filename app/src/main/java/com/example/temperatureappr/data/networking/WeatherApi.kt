@@ -7,6 +7,14 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherApi {
+
+    @GET("weather")
+    fun getWeatherForLocationWithId(
+        @Query("id") locationId: Long,
+        @Query("appid") appId: String = BuildConfig.OPENWEATHERMAP_KEY,
+        @Query("units") units:String  = "metric"
+    ): Deferred<LocationWithWeather>
+
     @GET("weather")
     fun getWeatherForLocationWithLatLon(
         @Query("lat") lat: Double,

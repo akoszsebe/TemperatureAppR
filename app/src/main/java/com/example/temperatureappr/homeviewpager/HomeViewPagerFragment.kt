@@ -59,6 +59,9 @@ class HomeViewPagerFragment :
             activity?.window?.statusBarColor = resources.getColor(colorRes);
         }
     }
+
+    override fun initViewModel() {
+    }
 }
 
 class ViewPager2PageChangeCallback(private val listener: (Int) -> Unit) :

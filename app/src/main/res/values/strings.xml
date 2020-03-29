@@ -7,4 +7,6 @@
     <string name="_60">60</string>
     <string name="_0">0</string>
     <string name="celsius">CELSIUS</string>
+    <string name="locationSetup">Setup your Home Location</string>
+    <string name="usinggps">Using GPS</string>
 </resources>

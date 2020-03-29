@@ -3,9 +3,11 @@ package com.example.temperatureappr.outside
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.example.temperatureappr.R
 import com.example.temperatureappr.base.BaseFragment
 import com.example.temperatureappr.databinding.FragmentOutsideBinding
+import com.example.temperatureappr.homeviewpager.HomeViewPagerFragmentDirections
 import com.example.temperatureappr.utils.MyChart
 
 private const val ANIMATION_DURATION = 2500
@@ -26,19 +28,30 @@ class OutsideFragment :
             requireContext().resources.getColor(R.color.colorPink),
             requireContext().getDrawable(R.drawable.fade_pink)
         )
+
+        binding.buttonGps.setOnClickListener {
+            val direction =
+                HomeViewPagerFragmentDirections.actionOutsideFragmentToLocationSetupFragment()
+            view.findNavController().navigate(direction)
+        }
+
         initViewModel()
     }
 
-    private fun initViewModel() {
+    override fun initViewModel() {
         displayCircularProgressBarChange(0f)
         displayTemperatureTextChange(0f)
-        viewModel.temperature.observe(viewLifecycleOwner, Observer { newTemperature ->
-            displayCircularProgressBarChange(newTemperature)
-            displayTemperatureTextChange(newTemperature)
-            displayChartChange(newTemperature)
+        displayChartChange(0f)
+        viewModel.temperatureData.observe(viewLifecycleOwner, Observer { newTemperature ->
+            val temperature = newTemperature.main.temp.toFloat()
+            binding.textViewLocation.text = newTemperature.locationName
+            displayCircularProgressBarChange(temperature)
+            displayTemperatureTextChange(temperature)
+            displayChartChange(temperature)
         })
 
-        viewModel.loadTemperature()
+        val currentLocation = sharedPrefs.getCurrentLocation()
+        viewModel.loadTemperature(currentLocation)
     }
 
     private fun displayCircularProgressBarChange(temperature: Float) {

@@ -29,9 +29,10 @@ class InsideFragment :
         initViewModel()
     }
 
-    private fun initViewModel() {
+    override fun initViewModel() {
         displayCircularProgressBarChange(0f)
         displayTemperatureTextChange(0f)
+        displayChartChange(0f)
         viewModel.temperature.observe(viewLifecycleOwner, Observer { newTemperature ->
             displayCircularProgressBarChange(newTemperature)
             displayTemperatureTextChange(newTemperature)

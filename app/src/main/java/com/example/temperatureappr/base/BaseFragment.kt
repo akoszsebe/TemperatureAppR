@@ -9,22 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.example.temperatureappr.di.module.util.viewModel
 import com.example.temperatureappr.utils.LoaderDialog
 import com.example.temperatureappr.utils.SharedPrefs
 import org.koin.core.qualifier.TypeQualifier
 import kotlin.reflect.KClass
-import com.example.temperatureappr.di.module.util.viewModel
 
 
-abstract class BaseFragment<B : ViewDataBinding,out VM : ViewModel>(private var layoutResId: Int,vmClass: KClass<VM>) : Fragment() {
+abstract class BaseFragment<B : ViewDataBinding, out VM : ViewModel>(
+    private var layoutResId: Int,
+    vmClass: KClass<VM>
+) : Fragment() {
     lateinit var sharedPrefs: SharedPrefs
     protected lateinit var binding: B
-    protected val viewModel : VM by viewModel(vmClass, qualifier = TypeQualifier(vmClass))
-    private lateinit var progressBar : Dialog
+    protected val viewModel: VM by viewModel(vmClass, qualifier = TypeQualifier(vmClass))
+    private lateinit var progressBar: Dialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +42,10 @@ abstract class BaseFragment<B : ViewDataBinding,out VM : ViewModel>(private var 
         return binding.root
     }
 
-    fun showToastMessage(message: String?){
-        Toast.makeText(this.requireContext(),message, Toast.LENGTH_SHORT).show()
+    abstract fun initViewModel()
+
+    fun showToastMessage(message: String?) {
+        Toast.makeText(this.requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     fun showDialog(message: String?) {
@@ -64,7 +71,8 @@ abstract class BaseFragment<B : ViewDataBinding,out VM : ViewModel>(private var 
             .setPositiveButton("Yes") { dialog, id ->
                 startActivityForResult(
                     Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    , 11)
+                    , 11
+                )
             }
             .setNegativeButton("No") { dialog, id ->
                 dialog.cancel()
@@ -73,11 +81,19 @@ abstract class BaseFragment<B : ViewDataBinding,out VM : ViewModel>(private var 
         alert.show()
     }
 
-    fun showLoader(){
+    fun setToolbar(toolbar: Toolbar?, showHomeButton: Boolean) {
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.let {
+            it.setDisplayHomeAsUpEnabled(showHomeButton)
+            it.setDisplayShowHomeEnabled(showHomeButton)
+        }
+    }
+
+    fun showLoader() {
         progressBar.show()
     }
 
-    fun hideLoader(){
+    fun hideLoader() {
         progressBar.dismiss()
     }
 }

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -16,12 +16,18 @@
             android:gravity="center"
             android:text="@string/inside_temp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FFFFF0" />
+            android:textColor="#FFFFF0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <LinearLayout
             android:layout_width="250dp"
             android:layout_height="300dp"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            app:layout_constraintBottom_toTopOf="@+id/myChart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -93,17 +99,11 @@
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/myChart"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
-    </LinearLayout>
+            android:layout_height="250dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

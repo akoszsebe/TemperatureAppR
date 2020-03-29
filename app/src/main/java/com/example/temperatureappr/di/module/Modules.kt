@@ -7,7 +7,9 @@ import com.example.temperatureappr.data.repository.InsideTemperatureRepositoryIm
 import com.example.temperatureappr.data.repository.OutsideTemperatureRepository
 import com.example.temperatureappr.data.repository.OutsideTemperatureRepositoryImpl
 import com.example.temperatureappr.inside.InsideViewModel
+import com.example.temperatureappr.locationsetup.LocationSetupViewModel
 import com.example.temperatureappr.outside.OutsideViewModel
+import com.example.temperatureappr.utils.LocationHelper
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -39,12 +41,16 @@ val appModules = module {
             baseUrl = OUTSIDE_TEMPERATURE_API_BASE_URL
         )
     }
+    single {
+        provideLocationHelper()
+    }
 
     factory<InsideTemperatureRepository> { InsideTemperatureRepositoryImpl(temperatureApi = get()) }
     factory<OutsideTemperatureRepository> { OutsideTemperatureRepositoryImpl(weatherApi = get()) }
 
     viewModel { InsideViewModel(insideTemperatureRepository = get()) }
     viewModel { OutsideViewModel(outsideTemperatureRepository = get()) }
+    viewModel { LocationSetupViewModel(locationHelper = get(), outsideTemperatureRepository = get()) }
 }
 
 fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
@@ -74,4 +80,8 @@ inline fun <reified T> provideRetrofitService(
         .client(okHttpClient)
         .build()
     return retrofit.create(T::class.java)
+}
+
+fun provideLocationHelper(): LocationHelper {
+    return LocationHelper()
 }
