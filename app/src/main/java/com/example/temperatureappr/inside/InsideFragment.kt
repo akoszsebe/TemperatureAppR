@@ -7,9 +7,8 @@ import com.example.temperatureappr.R
 import com.example.temperatureappr.base.BaseFragment
 import com.example.temperatureappr.databinding.FragmentInsideBinding
 import com.example.temperatureappr.utils.MyChart
-
-private const val ANIMATION_DURATION = 2500
-private const val PROGRESS_SHIFT = 1.66f
+import com.example.temperatureappr.utils.Constants.Companion.ANIMATION_DURATION
+import com.example.temperatureappr.utils.Constants.Companion.PROGRESS_SHIFT
 
 class InsideFragment :
     BaseFragment<FragmentInsideBinding, InsideViewModel>(
@@ -38,8 +37,6 @@ class InsideFragment :
             displayTemperatureTextChange(newTemperature)
             displayChartChange(newTemperature)
         })
-
-        viewModel.loadTemperature()
     }
 
     private fun displayCircularProgressBarChange(temperature: Float) {
@@ -55,5 +52,20 @@ class InsideFragment :
 
     private fun displayChartChange(temperature: Float) {
         myChart.addData(temperature)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.startLoadTemperatureRepeated()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopLoadTemperatureRepeated()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopLoadTemperatureRepeated()
     }
 }

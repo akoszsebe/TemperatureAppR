@@ -9,9 +9,8 @@ import com.example.temperatureappr.base.BaseFragment
 import com.example.temperatureappr.databinding.FragmentOutsideBinding
 import com.example.temperatureappr.homeviewpager.HomeViewPagerFragmentDirections
 import com.example.temperatureappr.utils.MyChart
-
-private const val ANIMATION_DURATION = 2500
-private const val PROGRESS_SHIFT = 1.66f
+import com.example.temperatureappr.utils.Constants.Companion.ANIMATION_DURATION
+import com.example.temperatureappr.utils.Constants.Companion.PROGRESS_SHIFT
 
 class OutsideFragment :
     BaseFragment<FragmentOutsideBinding, OutsideViewModel>(
@@ -49,9 +48,6 @@ class OutsideFragment :
             displayTemperatureTextChange(temperature)
             displayChartChange(temperature)
         })
-
-        val currentLocation = sharedPrefs.getCurrentLocation()
-        viewModel.loadTemperature(currentLocation)
     }
 
     private fun displayCircularProgressBarChange(temperature: Float) {
@@ -67,5 +63,11 @@ class OutsideFragment :
 
     private fun displayChartChange(temperature: Float) {
         myChart.addData(temperature)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentLocation = sharedPrefs.getCurrentLocation()
+        viewModel.loadTemperature(currentLocation)
     }
 }

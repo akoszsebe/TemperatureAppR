@@ -12,13 +12,31 @@ class InsideViewModel(private val insideTemperatureRepository: InsideTemperature
 
     val temperature = MutableLiveData<Float>()
 
-    fun loadTemperature() {
-        launch {
-            when (val result =
-                withContext(Dispatchers.IO) { insideTemperatureRepository.getTemperature() }) {
-                is UseCaseResult.Success -> temperature.value = result.data
-                is UseCaseResult.Error -> showError.value = result.exception.message
+    private lateinit var repeatJob : Job
+
+    fun startLoadTemperatureRepeated(){
+        repeatJob = loadTemperature()
+    }
+
+    fun stopLoadTemperatureRepeated(){
+        repeatJob.cancel()
+    }
+
+    private fun loadTemperature() : Job {
+        return launch {
+            while(isActive) {
+                when (val result =
+                    withContext(Dispatchers.IO) { insideTemperatureRepository.getTemperature() }) {
+                    is UseCaseResult.Success -> temperature.value = result.data
+                    is UseCaseResult.Error -> showError.value = result.exception.message
+                }
+                delay(5000)
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopLoadTemperatureRepeated()
     }
 }
