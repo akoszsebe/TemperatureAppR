@@ -1,6 +1,7 @@
 package com.example.temperatureappr.locationsetup
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.example.temperatureappr.R
 import com.example.temperatureappr.base.BaseFragment
 import com.example.temperatureappr.databinding.FragmentLocationSetupBinding
+import com.example.temperatureappr.utils.REQUEST_PERMISSION_LOCATION
 
 class LocationSetupFragment : BaseFragment<FragmentLocationSetupBinding, LocationSetupViewModel>(
     R.layout.fragment_location_setup,
@@ -18,21 +20,25 @@ class LocationSetupFragment : BaseFragment<FragmentLocationSetupBinding, Locatio
         super.onViewCreated(view, savedInstanceState)
         setToolbar(binding.toolbar, true)
         binding.buttonGps.setOnClickListener {
-            if (viewModel.locationHelper.checkPermissionForLocation(this.requireActivity())) {
-                val locationManager =
-                    this.requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    showDialogNoGps()
-                } else {
-                    showLoader()
-                    viewModel.locationHelper.startLocationUpdates(
-                        this.requireContext(),
-                        viewModel.locationCallback
-                    )
-                }
+            if (viewModel.locationHelper.checkPermissionForLocation(this)) {
+                getLocation()
             }
         }
         initViewModel()
+    }
+
+    private fun getLocation() {
+        val locationManager =
+            this.requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            showDialogNoGps()
+        } else {
+            showLoader()
+            viewModel.locationHelper.startLocationUpdates(
+                this.requireContext(),
+                viewModel.locationCallback
+            )
+        }
     }
 
     override fun initViewModel() {
@@ -41,5 +47,20 @@ class LocationSetupFragment : BaseFragment<FragmentLocationSetupBinding, Locatio
             sharedPrefs.setCurrentLocation(newLocation.locationId)
             hideLoader()
         })
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_PERMISSION_LOCATION -> if (grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED) {
+                getLocation()
+            } else {
+                showDialog("GPS permission not allowed")
+            }
+        }
     }
 }
