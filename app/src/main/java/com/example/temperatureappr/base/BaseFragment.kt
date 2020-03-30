@@ -68,13 +68,13 @@ abstract class BaseFragment<B : ViewDataBinding, out VM : ViewModel>(
         val builder = AlertDialog.Builder(this.requireContext())
         builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
             .setCancelable(false)
-            .setPositiveButton("Yes") { dialog, id ->
+            .setPositiveButton("Yes") { _, _ ->
                 startActivityForResult(
                     Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     , 11
                 )
             }
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
         val alert: AlertDialog = builder.create()

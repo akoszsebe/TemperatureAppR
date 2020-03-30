@@ -2,6 +2,7 @@ package com.example.temperatureappr.outside
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.temperatureappr.R
@@ -23,9 +24,9 @@ class OutsideFragment :
         super.onViewCreated(view, savedInstanceState)
         myChart = MyChart(
             binding.myChart,
-            requireContext().resources.getColor(R.color.windowBackground),
-            requireContext().resources.getColor(R.color.colorPink),
-            requireContext().getDrawable(R.drawable.fade_pink)
+            ContextCompat.getColor(requireContext(),R.color.windowBackground),
+            ContextCompat.getColor(requireContext(), R.color.colorPink),
+            ContextCompat.getDrawable(requireContext(), R.drawable.fade_pink)
         )
 
         binding.buttonGps.setOnClickListener {

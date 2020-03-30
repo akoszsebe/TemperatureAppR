@@ -2,6 +2,7 @@ package com.example.temperatureappr.inside
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.temperatureappr.R
 import com.example.temperatureappr.base.BaseFragment
@@ -21,9 +22,9 @@ class InsideFragment :
         super.onViewCreated(view, savedInstanceState)
         myChart = MyChart(
             binding.myChart,
-            requireContext().resources.getColor(R.color.windowBackground),
-            requireContext().resources.getColor(R.color.colorGreen),
-            requireContext().getDrawable(R.drawable.fade_green)
+            ContextCompat.getColor(requireContext(),R.color.windowBackground),
+            ContextCompat.getColor(requireContext(), R.color.colorGreen),
+            ContextCompat.getDrawable(requireContext(), R.drawable.fade_green)
         )
         initViewModel()
     }

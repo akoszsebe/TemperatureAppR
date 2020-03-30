@@ -3,6 +3,7 @@ package com.example.temperatureappr.homeviewpager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.example.temperatureappr.R
@@ -54,7 +55,7 @@ class HomeViewPagerFragment :
 
     private fun setStatusBarColor(colorRes: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity?.window?.statusBarColor = resources.getColor(colorRes);
+            activity?.window?.statusBarColor = ContextCompat.getColor(this.requireContext(),colorRes)
         }
     }
 
