@@ -38,7 +38,7 @@ class HomeViewPagerFragment :
             }
         }
         viewPagerPageChangeCallback = ViewPager2PageChangeCallback {
-            viewPager.setCurrentItem(it, false)
+            viewPager.setCurrentItem(it, true)
             binding.navigation.menu[it].isChecked = true
             when (it) {
                 1 -> setStatusBarColor(R.color.colorPinkDark)
